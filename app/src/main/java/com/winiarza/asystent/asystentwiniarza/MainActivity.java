@@ -13,8 +13,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.winiarza.asystent.asystentwiniarza.Models.Ingredient;
+import com.winiarza.asystent.asystentwiniarza.Models.Measurement;
+import com.winiarza.asystent.asystentwiniarza.Models.Recipe;
+import com.winiarza.asystent.asystentwiniarza.db.DataManager;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    DataManager dataManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
