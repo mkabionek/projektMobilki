@@ -155,15 +155,15 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_recipe) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
-            finish();
+//            finish();
         } else if (id == R.id.nav_new_recipe) {
             Intent i = new Intent(this, NewRecipeActivity.class);
             startActivity(i);
-            finish();
+//            finish();
         } else if (id == R.id.nav_reminders) {
             Intent i = new Intent(this, RemindersActivity.class);
             startActivity(i);
-            finish();
+//            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
