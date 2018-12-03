@@ -34,9 +34,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private MyApplication app;
+
     private RecipeAdapter adapter;
     private ArrayList<Recipe> recipes;
+    private MyApplication app;
     private DataManager dataManager;
     private ListView listView;
 
@@ -118,9 +119,12 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Recipe recipe = (Recipe) parent.getItemAtPosition(position);
-                        Intent i = new Intent(MainActivity.this, EditRecipeActivity.class);
-                        i.putExtra("recipeId", recipe.getId());
-                        startActivity(i);
+                        if(recipe.getId() != 0){
+                            Intent i = new Intent(MainActivity.this, EditRecipeActivity.class);
+                            i.putExtra("recipeId", recipe.getId());
+                            startActivity(i);
+                        }
+
                     }
                 }
         );
