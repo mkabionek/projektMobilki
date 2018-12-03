@@ -53,8 +53,7 @@ public class DataManager implements IDataManager {
 
     @Override
     public ArrayList<Recipe> getRecipes() {
-        // TODO
-        return null;
+        return recipeDAO.getAll();
     }
 
     @Override

@@ -2,20 +2,15 @@ package com.winiarza.asystent.asystentwiniarza;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
+
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.Menu;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -23,7 +18,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import com.winiarza.asystent.asystentwiniarza.Firebase.ModelFirebase.Recipes;
 import com.winiarza.asystent.asystentwiniarza.Models.Ingredient;
 import com.winiarza.asystent.asystentwiniarza.Models.Measurement;
@@ -31,18 +25,14 @@ import com.winiarza.asystent.asystentwiniarza.Models.Recipe;
 import com.winiarza.asystent.asystentwiniarza.db.DataManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private ListView list ;
-    private ArrayAdapter<String> adapter
 
-    DataManager dataManager;
-
+    private MyApplication app;
+    private RecipeAdapter adapter;
+    private ArrayList<Recipe> recipes;
+    private DataManager dataManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +41,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        app = (MyApplication) getApplication();
+        dataManager = app.getDataManager();
 
+        recipes = dataManager.getRecipes();
+
+        ListView listView = findViewById(R.id.recipes_list);
+        adapter = new RecipeAdapter(this, 0, recipes);
+        listView.setAdapter(adapter);
 
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -73,7 +62,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-
 
                         ArrayList ingredients = new ArrayList<Ingredient>();
 
@@ -96,6 +84,12 @@ public class MainActivity extends AppCompatActivity
                         ingredients.add(ingredient1);
 
                         recipe.setIngredients(ingredients);
+
+                        //***********************
+                        recipes.add(recipe);
+                        adapter.notifyDataSetChanged();
+                        //****************************
+
                         Log.d("TAG", "opis:"+product + rec.getNazwa()+rec1.getNazwa());
 
 
