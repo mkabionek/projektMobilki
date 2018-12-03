@@ -13,6 +13,7 @@ import java.util.List;
 
 public class RecipeAdapter extends ArrayAdapter<Recipe> {
     TextView tvName;
+    TextView tvDescription;
 
     public RecipeAdapter(Context context, int resource, List<Recipe> objects) {
         super(context, resource, objects);
@@ -29,6 +30,10 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
 
         tvName = (TextView) convertView.findViewById(R.id.tvName);
         tvName.setText(recipe.getName());
+
+        tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
+        tvDescription.setText(recipe.getDescription());
+
 
         return convertView;
     }
