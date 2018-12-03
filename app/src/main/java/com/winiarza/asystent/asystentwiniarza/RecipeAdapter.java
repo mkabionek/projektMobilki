@@ -31,8 +31,8 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
         tvName = (TextView) convertView.findViewById(R.id.tvName);
         tvName.setText(recipe.getName());
 
-        tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
-        tvDescription.setText(recipe.getDescription());
+//        tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
+//        tvDescription.setText(recipe.getDescription());
 
 
         return convertView;
