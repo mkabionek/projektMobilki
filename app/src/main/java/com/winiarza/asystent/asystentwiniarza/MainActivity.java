@@ -146,6 +146,8 @@ public class MainActivity extends AppCompatActivity
                     public void onClick(View view) {
                         app.getDataManager().deleteRecipe(recipe.getId());
                         Toast.makeText(MainActivity.this, R.string.recipe_removed_info, Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(MainActivity.this, MainActivity.class);
+                        startActivity(i);
                         dialog.dismiss();
                     }
                 });

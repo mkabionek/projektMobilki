@@ -48,9 +48,7 @@ public class RecipeDAO implements Dao<Recipe> {
     @Override
     public void delete(Recipe entity) {
         if (entity.getId() > 0){
-            db.delete(RecipeTable.TABLE_NAME,
-                    BaseColumns._ID + " = ?",
-                    new String[]{ String.valueOf(entity.getId()) });
+            db.delete(RecipeTable.TABLE_NAME, BaseColumns._ID + "=" + entity.getId(), null);
         }
     }
 

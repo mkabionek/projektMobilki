@@ -93,8 +93,9 @@ public class DataManager implements IDataManager {
     @Override
     public boolean deleteRecipe(long recipeId) {
 
-        // TODO
-        return false;
+            recipeDAO.delete(recipeDAO.get(recipeId));
+
+            return true;
     }
 
     @Override

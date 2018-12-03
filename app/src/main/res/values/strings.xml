@@ -15,4 +15,5 @@
     <string name="remove_recipe_btn">Tak</string>
     <string name="remove_recipe_label">Czy na pewno chcesz usunac przepis?</string>
     <string name="recipe_removed_info">Przepis został usunięty.</string>
+    <string name="recipe_added_info">Przepis został dodany.</string>
 </resources>

@@ -74,6 +74,9 @@ public class NewRecipeActivity extends AppCompatActivity {
                 recipe.setIngredients(ingredients);
                 recipe.setDescription(descriptionRecipe.getText().toString());
                 dataManager.saveRecipe(recipe);
+                Toast.makeText(NewRecipeActivity.this, R.string.recipe_added_info, Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(NewRecipeActivity.this, MainActivity.class);
+                startActivity(i);
             }
         });
 
