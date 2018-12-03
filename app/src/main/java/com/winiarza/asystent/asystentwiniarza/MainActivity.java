@@ -7,11 +7,16 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     private RecipeAdapter adapter;
     private ArrayList<Recipe> recipes;
     private DataManager dataManager;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,7 @@ public class MainActivity extends AppCompatActivity
         recipes = dataManager.getRecipes();
 
         ListView listView = findViewById(R.id.recipes_list);
-        adapter = new RecipeAdapter(this, 0, recipes);
+        adapter = new RecipeAdapter(this, android.R.layout.select_dialog_item, recipes);
         listView.setAdapter(adapter);
 
 
@@ -105,7 +111,6 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-        //
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -114,6 +119,44 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Recipe recipe = (Recipe) parent.getItemAtPosition(position);
+                        Intent i = new Intent(MainActivity.this, EditRecipeActivity.class);
+                        i.putExtra("recipeId", recipe.getId());
+                        startActivity(i);
+                    }
+                }
+        );
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View arg1, int position, long id) {
+                final Recipe recipe = (Recipe) parent.getItemAtPosition(position);
+
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.dialog_recipe_remove, null);
+                Button btn = (Button) mView.findViewById(R.id.remove_recipe_button);
+
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        app.getDataManager().deleteRecipe(recipe.getId());
+                        Toast.makeText(MainActivity.this, R.string.recipe_removed_info, Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                return true;
+            }
+        });
+
     }
 
     @Override
@@ -126,18 +169,8 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }*/
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -157,15 +190,15 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_recipe) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
-            finish();
+//            finish();
         } else if (id == R.id.nav_new_recipe) {
             Intent i = new Intent(this, NewRecipeActivity.class);
             startActivity(i);
-            finish();
+//            finish();
         } else if (id == R.id.nav_reminders) {
             Intent i = new Intent(this, RemindersActivity.class);
             startActivity(i);
-            finish();
+//            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

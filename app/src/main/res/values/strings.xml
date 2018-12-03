@@ -12,4 +12,7 @@
     <string name="dodaj_przepis">Dodaj przepis</string>
     <string name="edytuj_przepis">Edytuj przepis</string>
     <string name="przypomnienia">Przypomnienia</string>
+    <string name="remove_recipe_btn">Tak</string>
+    <string name="remove_recipe_label">Czy na pewno chcesz usunac przepis?</string>
+    <string name="recipe_removed_info">Przepis został usunięty.</string>
 </resources>
