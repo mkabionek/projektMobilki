@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,16 +14,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Menu;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import com.winiarza.asystent.asystentwiniarza.Firebase.ModelFirebase.Recipes;
 import com.winiarza.asystent.asystentwiniarza.Models.Ingredient;
 import com.winiarza.asystent.asystentwiniarza.Models.Measurement;
 import com.winiarza.asystent.asystentwiniarza.Models.Recipe;
 import com.winiarza.asystent.asystentwiniarza.db.DataManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private ListView list ;
+    private ArrayAdapter<String> adapter
 
     DataManager dataManager;
 
@@ -43,6 +60,57 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            Recipe recipe = new Recipe();
+            Measurement measurement = new Measurement();
+            Measurement measurement1 = new Measurement();
+            Ingredient ingredient = new Ingredient();
+            Ingredient ingredient1 = new Ingredient();
+            int i = 0;
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+
+
+                        ArrayList ingredients = new ArrayList<Ingredient>();
+
+                        String product = ds.child("opis").getValue(String.class);
+                        Recipes rec = ds.child("składniki").child("0").getValue(Recipes.class);
+                        Recipes rec1 = ds.child("składniki").child("1").getValue(Recipes.class);
+
+
+                        measurement.setName(rec.getJednostka());
+                        ingredient.setMeasurement(measurement);
+                        ingredient.setName(rec.getNazwa());
+                        ingredient.setAmount(rec.getIlosc());
+
+                        measurement1.setName(rec1.getJednostka());
+                        ingredient1.setMeasurement(measurement1);
+                        ingredient1.setName(rec1.getNazwa());
+                        ingredient1.setAmount(rec1.getIlosc());
+
+                        ingredients.add(ingredient);
+                        ingredients.add(ingredient1);
+
+                        recipe.setIngredients(ingredients);
+                        Log.d("TAG", "opis:"+product + rec.getNazwa()+rec1.getNazwa());
+
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
+
+
+        //
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
