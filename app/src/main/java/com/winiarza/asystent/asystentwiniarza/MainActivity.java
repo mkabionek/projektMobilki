@@ -53,21 +53,23 @@ public class MainActivity extends AppCompatActivity
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.addValueEventListener(new ValueEventListener() {
-            Recipe recipe = new Recipe();
-            Measurement measurement = new Measurement();
-            Measurement measurement1 = new Measurement();
-            Ingredient ingredient = new Ingredient();
-            Ingredient ingredient1 = new Ingredient();
+
             int i = 0;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-
+                        Recipe recipe = new Recipe();
+                        Recipe recipe1 = new Recipe();
+                        Measurement measurement = new Measurement();
+                        Measurement measurement1 = new Measurement();
+                        Ingredient ingredient = new Ingredient();
+                        Ingredient ingredient1 = new Ingredient();
                         ArrayList ingredients = new ArrayList<Ingredient>();
-
-                        String product = ds.child("opis").getValue(String.class);
-                        Recipes rec = ds.child("składniki").child("0").getValue(Recipes.class);
-                        Recipes rec1 = ds.child("składniki").child("1").getValue(Recipes.class);
+                        String product = ds.getKey();
+//                        String product = ds.child("opis").getValue(String.class);
+                        String nazwa = ds.child("nazwa").getValue(String.class);
+                        Recipes rec = ds.child("skladniki").child("0").getValue(Recipes.class);
+                        Recipes rec1 = ds.child("skladniki").child("1").getValue(Recipes.class);
 
 
                         measurement.setName(rec.getJednostka());
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity
 
                         ingredients.add(ingredient);
                         ingredients.add(ingredient1);
-
+                        recipe.setName(nazwa);
                         recipe.setIngredients(ingredients);
 
                         //***********************
@@ -90,10 +92,7 @@ public class MainActivity extends AppCompatActivity
                         adapter.notifyDataSetChanged();
                         //****************************
 
-                        Log.d("TAG", "opis:"+product + rec.getNazwa()+rec1.getNazwa());
-
-
-
+                        Log.d("TAG", "opis:"+nazwa);
                 }
             }
 
