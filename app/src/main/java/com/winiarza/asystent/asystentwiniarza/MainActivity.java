@@ -64,43 +64,36 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                        Recipe recipe = new Recipe();
-                        Recipe recipe1 = new Recipe();
-                        Measurement measurement = new Measurement();
-                        Measurement measurement1 = new Measurement();
-                        Ingredient ingredient = new Ingredient();
-                        Ingredient ingredient1 = new Ingredient();
-                        ArrayList ingredients = new ArrayList<Ingredient>();
-                        String product = ds.getKey();
-                        String opis = ds.child("opis").getValue(String.class);
-//                        String product = ds.child("opis").getValue(String.class);
-                        String nazwa = ds.child("nazwa").getValue(String.class);
-                        Recipes rec = ds.child("skladniki").child("0").getValue(Recipes.class);
-                        Recipes rec1 = ds.child("skladniki").child("1").getValue(Recipes.class);
+
+                    Iterable<DataSnapshot> iterable = ds.child("skladniki").getChildren();
+                    String opis = ds.child("opis").getValue(String.class);
+                    String nazwa = ds.child("nazwa").getValue(String.class);
 
 
+                    Measurement measurement;
+                    Ingredient ingredient;
+                    ArrayList ingredients = new ArrayList<Ingredient>();
+
+                    for (DataSnapshot d: iterable){
+                        Recipes rec = d.getValue(Recipes.class);
+                        measurement = new Measurement();
                         measurement.setName(rec.getJednostka());
+                        ingredient = new Ingredient();
                         ingredient.setMeasurement(measurement);
                         ingredient.setName(rec.getNazwa());
                         ingredient.setAmount(rec.getIlosc());
-
-                        measurement1.setName(rec1.getJednostka());
-                        ingredient1.setMeasurement(measurement1);
-                        ingredient1.setName(rec1.getNazwa());
-                        ingredient1.setAmount(rec1.getIlosc());
-
                         ingredients.add(ingredient);
-                        ingredients.add(ingredient1);
-                        recipe.setName(nazwa);
-                        recipe.setDescription(opis);
-                        recipe.setIngredients(ingredients);
+                    }
 
-                        //***********************
-                        recipes.add(recipe);
-                        adapter.notifyDataSetChanged();
-                        //****************************
+                    Recipe recipe = new Recipe();
+                    recipe.setIngredients(ingredients);
+                    recipe.setDescription(opis);
+                    recipe.setName(nazwa);
 
-                        Log.d("TAG", "opis:"+opis);
+                    recipes.add(recipe);
+                    adapter.notifyDataSetChanged();
+
+                    Log.d("TAG", "opis:" + opis);
                 }
             }
 
