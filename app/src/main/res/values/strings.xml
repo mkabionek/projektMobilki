@@ -6,4 +6,10 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="nazwa_przepisu">Nazwa Przepisu</string>
+    <string name="wpisz_nazw_przepisu">Wpisz nazwę przepisu</string>
+    <string name="asystent_winiarza">Asystent Winiarza</string>
+    <string name="dodaj_przepis">Dodaj przepis</string>
+    <string name="edytuj_przepis">Edytuj przepis</string>
+    <string name="przypomnienia">Przypomnienia</string>
 </resources>

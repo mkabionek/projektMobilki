@@ -19,6 +19,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".NewRecipeActivity"
+            android:label="@string/dodaj_przepis"
+            />
+        <activity android:name=".RemindersActivity"
+            android:label="@string/przypomnienia"
+            />
+        <activity android:name=".EditRecipeActivity">
+            android:label="@string/edytuj_przepis"
+
+        </activity>
     </application>
 
 </manifest>
