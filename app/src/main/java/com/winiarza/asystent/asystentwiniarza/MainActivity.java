@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity
                         Ingredient ingredient1 = new Ingredient();
                         ArrayList ingredients = new ArrayList<Ingredient>();
                         String product = ds.getKey();
+                        String opis = ds.child("opis").getValue(String.class);
 //                        String product = ds.child("opis").getValue(String.class);
                         String nazwa = ds.child("nazwa").getValue(String.class);
                         Recipes rec = ds.child("skladniki").child("0").getValue(Recipes.class);
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity
                         ingredients.add(ingredient);
                         ingredients.add(ingredient1);
                         recipe.setName(nazwa);
+                        recipe.setDescription(opis);
                         recipe.setIngredients(ingredients);
 
                         //***********************
@@ -92,7 +94,7 @@ public class MainActivity extends AppCompatActivity
                         adapter.notifyDataSetChanged();
                         //****************************
 
-                        Log.d("TAG", "opis:"+nazwa);
+                        Log.d("TAG", "opis:"+opis);
                 }
             }
 
