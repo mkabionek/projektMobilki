@@ -74,17 +74,19 @@ public class EditRecipeActivity extends AppCompatActivity implements CompoundBut
         @Override
         protected void onPause () {
         super.onPause();
+        long recipeId = getIntent().getLongExtra("recipeId", 0);
         SharedPreferences sharedPreferences = getPreferences(0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         //editor.putString("CHECK_BOX_VALUE", checkBox.getText().toString());
-        editor.putBoolean("CH", checkBox.isChecked());
+        editor.putBoolean(Long.toString(recipeId), checkBox.isChecked());
         editor.commit();
     }
         @Override
         protected void onResume () {
         super.onResume();
+        long recipeId = getIntent().getLongExtra("recipeId", 0);
         SharedPreferences sharedPreferences = getPreferences(0);
-        boolean checkBoxValue = sharedPreferences.getBoolean("CH", false);
+        boolean checkBoxValue = sharedPreferences.getBoolean(Long.toString(recipeId), false);
         checkBox.setChecked(checkBoxValue);
 
         }
