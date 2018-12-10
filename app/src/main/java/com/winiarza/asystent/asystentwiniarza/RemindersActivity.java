@@ -1,6 +1,8 @@
 package com.winiarza.asystent.asystentwiniarza;
 
+import android.content.ContentUris;
 import android.content.Intent;
+import android.net.Uri;
 import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
@@ -12,12 +14,29 @@ import java.util.Calendar;
 
 public class RemindersActivity extends AppCompatActivity {
 
-    Button addBtn;
+    Button addBtn, remindersListBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminders);
+
+
+
+        remindersListBtn = findViewById(R.id.viewRemindersBtn);
+        remindersListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long startMillis = Calendar.getInstance().getTimeInMillis();
+
+                Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
+                builder.appendPath("time");
+                ContentUris.appendId(builder, startMillis);
+                Intent intent = new Intent(Intent.ACTION_VIEW)
+                        .setData(builder.build());
+                startActivity(intent);
+            }
+        });
 
         addBtn = findViewById(R.id.addReminderBtn);
         addBtn.setOnClickListener(new View.OnClickListener() {
@@ -39,5 +58,6 @@ public class RemindersActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 }
