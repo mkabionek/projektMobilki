@@ -39,7 +39,7 @@
         </ListView>
 
         <CheckBox
-            android:id="@+id/checkBox2"
+            android:id="@+id/favorite_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"

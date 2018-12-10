@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AsystentWiniarza</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="nazwa_przepisu">The name of the recipe</string>
+    <string name="wpisz_nazw_przepisu">Enter the name of the recipe</string>
+    <string name="asystent_winiarza">Winemakers Assistant</string>
+    <string name="dodaj_przepis">Add a recipe</string>
+    <string name="edytuj_przepis">Edit a recipe</string>
+    <string name="przypomnienia">Reminders</string>
+    <string name="remove_recipe_btn">Yes</string>
+    <string name="remove_recipe_label">Are you sure you want to delete the recipe?</string>
+    <string name="recipe_removed_info">The recipe has been removed.</string>
+    <string name="recipe_added_info">The recipe has been added.</string>
+</resources>
